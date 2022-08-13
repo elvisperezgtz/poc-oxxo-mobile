@@ -5,16 +5,18 @@ repositories {
 }
 
 buildscript {
-  repositories {
-    maven {
-      url "https://plugins.gradle.org/m2/"
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
-  }
-  dependencies {
-    classpath "net.serenity-bdd:serenity-gradle-plugin:3.3.0"
-  }
+    dependencies {
+        classpath "net.serenity-bdd:serenity-gradle-plugin:3.3.1"
+        classpath("net.serenity-bdd:serenity-single-page-report:3.3.1")
+    }
 }
-
+group 'started'
+version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
@@ -26,26 +28,29 @@ targetCompatibility = 1.8
 
 ext {
     slf4jVersion = '1.7.7'
-    serenityCoreVersion = '3.3.0'
-    serenityCucumberVersion = '3.3.0'
+    serenityCoreVersion = '3.3.1'
+    serenityCucumberVersion = '3.3.1'
     junitVersion = '4.13.1'
     assertJVersion = '3.23.1'
     logbackVersion = '1.2.10'
 }
 
 dependencies {
-    implementation "ch.qos.logback:logback-classic:${logbackVersion}"
+    implementation "ch.qos.logback:logback-classic:${logbackVersion}",
+            "net.serenity-bdd:serenity-ensure:3.2.0"
 
     testImplementation "net.serenity-bdd:serenity-core:${serenityCoreVersion}",
             "net.serenity-bdd:serenity-cucumber:${serenityCucumberVersion}",
             "net.serenity-bdd:serenity-screenplay:${serenityCoreVersion}",
+            "net.serenity-bdd:serenity-screenplay-rest:${serenityCoreVersion}",
             "net.serenity-bdd:serenity-screenplay-webdriver:${serenityCoreVersion}",
-            "net.serenity-bdd:serenity-ensure:${serenityCoreVersion}",
             "junit:junit:${junitVersion}",
             "org.junit.platform:junit-platform-launcher:1.8.2",
             "org.junit.jupiter:junit-jupiter-engine:5.8.2",
             "org.junit.vintage:junit-vintage-engine:5.8.2",
+            "io.appium:java-client:7.6.0",
             "org.assertj:assertj-core:${assertJVersion}"
+
 }
 
 test {
