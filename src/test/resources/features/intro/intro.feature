@@ -5,7 +5,10 @@ Feature: Pantallas introductorias
   de sesion cada que no tenga una sesion iniciada.
 
   @intro
-  Scenario: Pantallas introductorias
+#    Background: El usuario tiene acceso a la app
+
+
+  Scenario: Navegacion por las pantallas introductorias
     Given Elvis tiene acceso a la App de Mpos
     When el realiza el tutorial introductorio
     Then el deberia poder visualizar el home de app
