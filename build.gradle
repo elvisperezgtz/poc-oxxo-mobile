@@ -38,6 +38,7 @@ ext {
 dependencies {
     implementation "ch.qos.logback:logback-classic:${logbackVersion}",
             "net.serenity-bdd:serenity-ensure:3.2.0"
+    implementation 'com.sun.mail:javax.mail:1.6.2'
 
     testImplementation "net.serenity-bdd:serenity-core:${serenityCoreVersion}",
             "net.serenity-bdd:serenity-cucumber:${serenityCucumberVersion}",
