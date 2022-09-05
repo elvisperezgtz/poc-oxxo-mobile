@@ -20,6 +20,10 @@ public class IntroDispositivoUI {
             .locatedForAndroid(By.xpath("//android.widget.TextView[@content-desc='TEXT_TITLE']"))
             .locatedForIOS(By.xpath(""));
 
+ public static final Target CONECTAR_DISPOSITIVO = Target.the("boton Conectar mi dispositivo")
+            .locatedForAndroid(By.xpath("//android.widget.TextView[@text='Conectar mi dispositivo']"))
+            .locatedForIOS(By.xpath(""));
+
  public static final Target CONECTAR_MAS_TARDE = Target.the("boton Conectar más tarde")
             .locatedForAndroid(By.xpath("//android.widget.TextView[@text='Conectar más tarde']"))
             .locatedForIOS(By.xpath(""));
@@ -30,6 +34,18 @@ public class IntroDispositivoUI {
 
  public static final Target HACERLO_MAS_TARDE = Target.the("boton Hacerlo más tarde")
             .locatedForAndroid(By.xpath("//android.view.View[@content-desc='DONGLE_BUTTON_GETIT_LATER']"))
+            .locatedForIOS(By.xpath(""));
+
+ public static final Target TITULO_SOLICITUD_ACTIVACION_BT = Target.the("titulo solicitud enciende Bluetooth")
+            .locatedForAndroid(By.id("android:id/message"))
+            .locatedForIOS(By.xpath(""));
+
+ public static final Target PERMITIR_ACTIVACION_BT = Target.the("boton Permitir")
+            .locatedForAndroid(By.id("android:id/message"))
+            .locatedForIOS(By.xpath(""));
+
+ public static final Target TITULO_PERMITIR_UBICACION = Target.the("mensaje activar ubicacion")
+            .locatedForAndroid(By.id("com.android.permissioncontroller:id/permission_message"))
             .locatedForIOS(By.xpath(""));
 
 }

@@ -12,10 +12,12 @@ import net.serenitybdd.screenplay.waits.WaitUntil;
 import net.thucydides.core.annotations.Managed;
 import starter.interactions.Esperar;
 import starter.tasks.Ingresar;
-import starter.tasks.ElNumeroTelefonico;
 import starter.tasks.Registrar;
 import starter.user_interfaces.RegistroUI;
+import starter.utils.OtpReader;
 import starter.utils.mail.GmailReader;
+
+import java.io.IOException;
 
 import static java.time.Duration.ofSeconds;
 import static net.serenitybdd.screenplay.matchers.WebElementStateMatchers.isPresent;
@@ -70,25 +72,15 @@ public class RegistroStep {
     }
 
     @And("{actor} ingresa un codigo de verificacion no valido")
-    public void elvisIngresaUnCodigoDeVerificacionNoValido(Actor actor) {
-        actor.attemptsTo(Ingresar.codigoDeValidacion("123456"));
+    public void elvisIngresaUnCodigoDeVerificacionNoValido(Actor actor) throws IOException {
+        actor.attemptsTo(Ingresar.codigoDeValidacion("111111"));
     }
 
     @And("{actor} ingresa el codigo de verifacion enviado a su celular")
-    public void elvisIngresaElCodigoDeVerifacionEnviadoASuCelular(Actor actor) {
-        try {
-            Thread.sleep(90000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        String codigoOTP = null;
-        try {
-            codigoOTP = GmailReader.getVerificationCode();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    public void elvisIngresaElCodigoDeVerifacionEnviadoASuCelular(Actor actor) throws IOException {
+      String otp = OtpReader.getOtpFromNotification(BrowseTheWeb.as(actor).getDriver());
         actor.attemptsTo(
-                Ingresar.codigoDeValidacion(codigoOTP)
+                Ingresar.codigoDeValidacion(otp)
         );
     }
 
@@ -121,15 +113,9 @@ public class RegistroStep {
     }
 
     @And("{actor} ingresa un nuevo codigo de verificacion valido")
-    public void elvisIngresaUnNuevoCodigoDeVerificacionValido(Actor actor) {
-        String codigoOTP = null;
-        try {
-            codigoOTP = GmailReader.getVerificationCode();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    public void elvisIngresaUnNuevoCodigoDeVerificacionValido(Actor actor) throws IOException {
         actor.attemptsTo(
-                Ingresar.unNuevoCodigoDeVerificacion(codigoOTP)
+                Ingresar.unNuevoCodigoDeVerificacion()
         );
     }
 

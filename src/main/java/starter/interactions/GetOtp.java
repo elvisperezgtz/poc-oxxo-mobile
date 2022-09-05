@@ -1,32 +1,42 @@
 package starter.interactions;
 
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.nativekey.AndroidKey;
-import io.appium.java_client.android.nativekey.KeyEvent;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Interaction;
 import net.serenitybdd.screenplay.Tasks;
 import net.serenitybdd.screenplay.abilities.BrowseTheWeb;
-import net.serenitybdd.screenplay.targets.Target;
+import net.serenitybdd.screenplay.matchers.WebElementStateMatchers;
+import net.serenitybdd.screenplay.waits.WaitUntil;
 import net.thucydides.core.webdriver.WebDriverFacade;
-import org.apache.commons.lang.StringUtils;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import java.io.IOException;
+import java.time.Duration;
+
+import static net.serenitybdd.screenplay.actors.OnStage.theActorInTheSpotlight;
+import static starter.user_interfaces.CommonsUI.SMS;
+
 public class GetOtp implements Interaction {
+
     @Override
     public <T extends Actor> void performAs(T actor) {
 
         WebDriver driver = ((WebDriverFacade) BrowseTheWeb.as(actor).getDriver()).getProxiedDriver();
         ((AndroidDriver) driver).openNotifications();
-        final Target OTPElement = Target.the("Notificacion SMS")
-                .locatedForAndroid(By.id("android:id/message_text"))
-                .locatedForIOS(By.xpath(""));
 
-        String otpMessage = OTPElement.resolveFor(actor).getText();
-        String OTP = StringUtils.substringAfter(otpMessage, "PIN code");
-        ((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.BACK));
-        actor.remember("codigoOTP", OTP);
+
+        actor.attemptsTo(WaitUntil.the(SMS, WebElementStateMatchers.isVisible()).forNoMoreThan(Duration.ofSeconds(90)));
+
+        String otpMessage = SMS.resolveFor(theActorInTheSpotlight()).getText();
+        System.out.println(otpMessage);
+        String[] code;
+        code = otpMessage.split(" es ");
+        code = (code[code.length - 1].replace(".", "").split(" "));
+        String otp = code[0];
+        String cmd = "adb shell input keyevent 4";
+        actor.attemptsTo(Ejecutar.elComandoAdb(cmd));
+
+        actor.remember("otp", otp);
     }
 
     public static GetOtp fromSMS() {

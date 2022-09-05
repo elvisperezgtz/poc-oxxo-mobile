@@ -73,8 +73,8 @@ public class Usuario {
         this.apellido ="Perez";
         this.email="testautomationoxxo@gmail.com";
         this.contrasenia = "Fensa2022**";
-        this.nombreNegocio= "Automation SAS";
-        this.actividadEconomica="Comercio de Robots";
+        this.nombreNegocio= "OXXO";
+        this.actividadEconomica="ALIMENTOS Y BEBIDAS";
         this.codigoPostal="50001";
     }
 

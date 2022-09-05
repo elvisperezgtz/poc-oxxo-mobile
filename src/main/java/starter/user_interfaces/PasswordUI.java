@@ -5,7 +5,11 @@ import org.openqa.selenium.By;
 
 public class PasswordUI {
     public static final Target CONTRASENIA = Target.the("Campo contrasenia")
-            .locatedForAndroid(By.xpath("//android.view.View[@content-desc='CREATEPASSWORD_COLUMN']/android.widget.EditText"))
+            .locatedForAndroid(By.className("android.widget.EditText"))
+            .locatedForIOS(By.xpath(""));
+
+   public static final Target TITULO = Target.the("Campo contrasenia")
+            .locatedForAndroid(By.xpath("//android.widget.TextView[@text='Crea tu contrase\u00F1a']"))
             .locatedForIOS(By.xpath(""));
 
     public static final Target VALIDACION_8_CARACTERES = Target.the("validacion 8 caracteres")
@@ -29,7 +33,7 @@ public class PasswordUI {
             .locatedForIOS(By.xpath(""));
 
     public static final Target BOTON_CONTINUAR = Target.the("boton continuar")
-            .locatedForAndroid(By.xpath("//android.view.View[@content-desc='CREATEPASSWORD_COLUMN']/android.view.View[3]/android.widget.Button"))
+            .locatedForAndroid(By.className("android.widget.Button"))
             .locatedForIOS(By.xpath(""));
 
     public static final Target VALIDACIONES = Target.the("check validaciones")

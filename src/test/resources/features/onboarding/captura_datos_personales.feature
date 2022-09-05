@@ -6,16 +6,18 @@ Feature: Visualizar pantalla de captura de datos Personales & Negocio
 
 
   Background: Elvis tiene un numero registrado y contrasenia
-    Given Elvis ha registrado el telefono "3040000000" y establecio la contrasenia "Mpos1234"
+    Given Elvis ha registrado el telefono "5568721918"
+    And Elvis ingreso el codigo de validacion enviado a su celular
+    And Elvis establecio "Mpos1234" como contrasenia de su cuenta
 
-    @datosPersonales
+  @datosPersonales
   Scenario: Capturar datos personales- happy path
     When Elvis registra los datos personales
-    Then Elvis deberia poder ver el titulo "Ya cuentas con tu dispositivo de cobro?"
+    Then Elvis deberia poder ver el titulo "¿Ya cuentas con tu dispositivo de cobro?"
     And  Elvis deberia ver los botones con el texto "Ya lo tengo" y "Aun no lo tengo"
 
   Scenario: Validar que el campo nombre admite acentos
-    Given
+
 
   Scenario: Validar obligatoriedad del campo nombre
 

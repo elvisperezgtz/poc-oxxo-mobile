@@ -11,12 +11,17 @@ import net.serenitybdd.screenplay.ensure.Ensure;
 import net.thucydides.core.annotations.Managed;
 import starter.interactions.GetOtp;
 import starter.models.Usuario;
+import starter.tasks.Completar;
 import starter.tasks.Ingresar;
 import starter.tasks.Registrar;
 import starter.user_interfaces.IntroDispositivoUI;
+import starter.user_interfaces.PasswordUI;
+
+import java.io.IOException;
 
 import static starter.user_interfaces.DatosPersonalesUI.CONTINUAR;
 import static starter.user_interfaces.IntroDispositivoUI.TITULO;
+import static starter.user_interfaces.PasswordUI.BOTON_CONTINUAR;
 
 public class CapturaDatosPersonalesSteps {
     @Managed(driver = "appium")
@@ -24,12 +29,30 @@ public class CapturaDatosPersonalesSteps {
 
     public Usuario usuario = new Usuario();
 
-    @Given("{actor} ha registrado el telefono {string} y establecio la contrasenia {string}")
-    public void elvisHaRegistradoElTelefonoYEstablecioLaContrasenia(Actor actor, String telefono, String contrasenia) {
+    @Given("{actor} ha registrado el telefono {string}")
+    public void elvisHaRegistradoElTelefono(Actor actor, String telefono) {
+        actor.attemptsTo(
+                Completar.elTutorial(),
+                Registrar.elNumeroTelefonico(telefono)
+        );
+    }
 
+    @And("{actor} ingreso el codigo de validacion enviado a su celular")
+    public void elvisIngresoElCodigoDeValidacionEnviadoASuCelular(Actor actor) throws IOException {
+//        String otp = OtpReader.getOtpFromNotification(BrowseTheWeb.as(actor).getDriver());
         actor.attemptsTo(
                 GetOtp.fromSMS()
-              //  Registrar.elNumeroTelefonicoYContrasenia(telefono, contrasenia)
+        );
+        actor.attemptsTo(
+                Ingresar.codigoDeValidacion(actor.recall("otp"))
+        );
+    }
+
+    @And("{actor} establecio {string} como contrasenia de su cuenta")
+    public void elvisEstablecioComoContraseniaDeSuCuenta(Actor actor, String contrasenia) {
+        actor.attemptsTo(
+                Ingresar.unaContrasenia(contrasenia),
+                Click.on(BOTON_CONTINUAR)
         );
     }
 
@@ -56,4 +79,7 @@ public class CapturaDatosPersonalesSteps {
                 Ensure.that(IntroDispositivoUI.AUN_NO_LO_TENGO).text().isEqualTo(botonAunNoLoTengo)
         );
     }
+
+
+
 }
